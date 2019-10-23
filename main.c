@@ -29,6 +29,9 @@ int main(int argc, char *argv[])
     int op = 1;
     int tentativas = 10;
     NoSorteada * palavraSorteada;
+    char* letrasUsadas = (char*) malloc(255*sizeof(char));
+    int qntLetrasUsadas = 0;
+    int erros;
     /* FIM VARIÁVEIS DE JOGO */
 
     NoSecreto * lstSecreta = inicializaListaSecreta();
@@ -46,8 +49,8 @@ int main(int argc, char *argv[])
     printf("Arquivo de dados: %s\n\n",fNameArq);
 
     copyright();
-    Sleep(3000);
     printf("Voce tem 10 tentativas para acertar a palavra!");
+    Sleep(3000);
 
     lstSecreta = carregaListaArquivo(lstSecreta,fNameArq);
     //imprimeListaSecreta(lstSecreta);
@@ -63,20 +66,70 @@ int main(int argc, char *argv[])
             palavraSorteada = transformaPalavraEmLista(palavraSorteada, sorteada->palavra);
             do{
                 CLEAR_SCREEN;
+
+				if(tentativas == 0){
+                    letrasUsadas[0] = '\0';
+                    qntLetrasUsadas = 0;
+					printf("\nPuxa, voce foi enforcado!\n");
+					printf("A palavra era ");
+					printf("**");
+					imprimePalavraSorteada(palavraSorteada);
+					printf("**\n");
+
+					printf("    _______________         \n");
+					printf("   /               \\       \n");
+					printf("  /                 \\      \n");
+					printf("//                   \\/\\  \n");
+					printf("\\|   XXXX     XXXX   | /   \n");
+					printf(" |   XXXX     XXXX   |/     \n");
+					printf(" |   XXX       XXX   |      \n");
+					printf(" |                   |      \n");
+					printf(" \\__      XXX      __/     \n");
+					printf("   |\\     XXX     /|       \n");
+					printf("   | |           | |        \n");
+					printf("   | I I I I I I I |        \n");
+					printf("   |  I I I I I I  |        \n");
+					printf("   \\_             _/       \n");
+					printf("     \\_         _/         \n");
+					printf("       \\_______/           \n");
+					op = 0;
+					break;
+                }
+
+                printf("DICA: %s\n\n", dica);
                 imprimeForca(palavraSorteada);
-                printf("\nDICA: %s", dica);
+                printf("\n\nTentativas Restantes: %i", tentativas);
                 printf("\nDigite o seu palpite: ");
                 scanf("%c", &palpite);
+				if(qntLetrasUsadas == 0){
+					adicionaLetra(letrasUsadas, palpite, 1);
+					qntLetrasUsadas++;
+				}
+				else{
+                    if(buscaLetra(letrasUsadas, palpite, qntLetrasUsadas) == 0){
+						adicionaLetra(letrasUsadas, palpite, qntLetrasUsadas);
+						qntLetrasUsadas++;
+                    }
+                    else{
+                        printf("Essa letra ja foi usada!");
+                        setbuf(stdin, NULL);
+                        Sleep(1000);
+                        continue;
+                    }
+				}
+
                 setbuf(stdin, NULL);
                 if(verificarLetra(palavraSorteada, palpite) == 0){
                     printf("\nNao ha essa letra");
-                    Sleep(500);
+                    tentativas--;
+                    Sleep(1000);
                     continue;
                 }
                 if(acertouPalavra(palavraSorteada) == 1){
                     CLEAR_SCREEN;
                     imprimeForca(palavraSorteada);
-
+                    letrasUsadas[0] = '\0';
+                    qntLetrasUsadas = 0;
                     printf("\nParabens, voce ganhou!\n\n");
 
 					printf("       ___________      \n");

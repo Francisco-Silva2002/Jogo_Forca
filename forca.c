@@ -203,6 +203,12 @@ void imprimeForca(NoSorteada* l){
     }
 }
 
+void imprimePalavraSorteada(NoSorteada* l){
+    for(NoSorteada* p=l;p!=NULL;p=p->proximo){
+		printf("%c ", p->letra);
+    }
+}
+
 int verificarLetra(NoSorteada* l, char r){
     int acertou = 0; // 0 se nao tiver a letra
     for(NoSorteada* p=l;p!=NULL;p=p->proximo){
@@ -224,5 +230,22 @@ int acertouPalavra(NoSorteada* l){
 
     if(qnt == desc)
         return 1;
+    return 0;
+}
+
+void adicionaLetra(char* lista, char letra, int tam){
+    if(tam == 1)
+		lista[0] = letra;
+    else
+		lista[tam] = letra;
+}
+
+int buscaLetra(char* lista, char letra, int tam){
+
+    for(int i=0;i<tam;i++){
+		if(lista[i] == letra){
+			return 1;
+		}
+    }
     return 0;
 }

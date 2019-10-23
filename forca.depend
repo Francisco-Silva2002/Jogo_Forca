@@ -1,28 +1,28 @@
 # depslib dependency file v1.0
-1571770658 source:d:\2019\forca\forca.c
+1571793040 source:d:\2019\forca\forca.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"forca.h"
 
-1571770300 d:\2019\forca\forca.h
+1571792658 d:\2019\forca\forca.h
 
-1571770928 source:d:\2019\forca\main.c
+1571792752 source:d:\2019\forca\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<windows.h>
 	"forca.h"
 
-1571770658 source:f:\2019\forca\forca.c
+1571787830 source:f:\2019\forca\forca.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"forca.h"
 
-1571770300 f:\2019\forca\forca.h
+1571787994 f:\2019\forca\forca.h
 
-1571771168 source:f:\2019\forca\main.c
+1571788094 source:f:\2019\forca\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>

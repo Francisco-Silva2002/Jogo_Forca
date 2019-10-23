@@ -47,4 +47,9 @@ NoSorteada* inverteP(NoSorteada* l);
 NoSorteada* transformaPalavraEmLista(NoSorteada* l, char palavra[31]);
 int verificarLetra(NoSorteada* l, char r);
 int acertouPalavra(NoSorteada* l);
+void adicionaLetra(char* lista, char letra, int tam);
+int buscaLetra(char* lista, char letra, int tam);
+void imprimePalavraSorteada(NoSorteada* l);
+void desenhaforca(char* lista, int tam, NoSorteada* l);
+int achaErros(char* lista, int tam, NoSorteada* l);
 #endif // FORCA_H_INCLUDED
