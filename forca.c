@@ -3,6 +3,32 @@
 #include <string.h>
 #include "forca.h"
 
+Fila* cria (void)
+{
+    Fila* f = (Fila*) malloc(sizeof(Fila));
+    f->ini = f->fim = 0; /* inicializa fila vazia */
+    return f;
+}
+
+/* função auxiliar: insere no fim */
+NoSorteada* ins_fim (NoSorteada* fim, char v)
+{
+    NoSorteada* p = (NoSorteada*) malloc(sizeof(NoSorteada));
+    p->letra = v;
+    p->descoberta = 0;
+    p->proximo = NULL;
+    if (fim != NULL) /* verifica se lista não estava vazia */
+        fim->proximo = p;
+    return p;
+}
+
+void insere (Fila* f, char v)
+{
+    f->fim = ins_fim(f->fim,v);
+    if (f->ini==NULL) /* fila antes vazia? */
+        f->ini = f->fim;
+}
+
 //gera um numero aleatorio entre 1 e 'maximo'
 int geraAleatorio(int maximo)
 {
@@ -169,27 +195,14 @@ NoSorteada* insereLetra(NoSorteada* l, char c){
     return l;
 }
 
-NoSorteada* inverteP(NoSorteada* l){
-    NoSorteada* temp = inicializaPalavraSecreta();
-    for(NoSorteada* p=l;p!=NULL;p=p->proximo){
-        NoSorteada* novo;
-        novo = (NoSorteada*) malloc(sizeof(NoSorteada));
-        novo->letra = p->letra;
-        novo->proximo = temp;
-        novo->descoberta = 0;
-        temp = novo;
-    }
-
-    return temp;
-}
-
 NoSorteada* transformaPalavraEmLista(NoSorteada* l, char palavra[31]){
     l = inicializaPalavraSecreta();
+    Fila* inv = cria();
     for(int a=0;a<strlen(palavra); a++){
-        l = insereLetra(l, palavra[a]);
+        insere(inv, palavra[a]);
     }
 
-    l = inverteP(l);
+    l = inv->ini;
     return l;
 }
 
@@ -200,6 +213,12 @@ void imprimeForca(NoSorteada* l){
         } else{
             printf("%c ", p->letra);
         }
+    }
+}
+
+void imprimePalavraSorteada(NoSorteada* l){
+    for(NoSorteada* p=l;p!=NULL;p=p->proximo){
+		printf("%c ", p->letra);
     }
 }
 
@@ -224,5 +243,22 @@ int acertouPalavra(NoSorteada* l){
 
     if(qnt == desc)
         return 1;
+    return 0;
+}
+
+void adicionaLetra(char* lista, char letra, int tam){
+    if(tam == 1)
+		lista[0] = letra;
+    else
+		lista[tam] = letra;
+}
+
+int buscaLetra(char* lista, char letra, int tam){
+
+    for(int i=0;i<tam;i++){
+		if(lista[i] == letra){
+			return 1;
+		}
+    }
     return 0;
 }
